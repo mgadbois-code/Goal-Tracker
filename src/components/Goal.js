@@ -7,7 +7,7 @@ const Goal = (props) => {
     const tasks=doneTasks.concat(undoneTasks)
 
     return (
-        <div className="item pointer" onClick={() => props.onToggle(props.goal.id)}>
+        <div className="item pointer" style={{border:"solid 6px", borderColor: props.goal.color}} onClick={() => props.onToggle(props.goal.id)}>
             <h3 className="detail" onClick={() => props.onToggle(props.goal.id)}>{props.goal.title}</h3>
             {props.goal.dueDate !=="" && <h4 onClick={() => props.onToggle(props.goal.id)} className="detail">Due: {props.goal.dueDate} </h4>}
             <div className="flex" >

@@ -1,5 +1,6 @@
 import GoalList from "./components/GoalList";
 import Header from "./components/Header";
+import AddGoal from "./components/AddGoal";
 import { useState } from "react";
 import TaskList from "./components/TaskList";
 
@@ -12,14 +13,16 @@ function App() {
           title:"Elephant Essay",
           dueDate:"10/30/20",
           tasks:[{id:1,title:"Research", done:true},{id:2,title:"First Draft", done:false},{id:3,title:"Create Outline", done:true},{id:4,title:"Edit", done:false},{id:5,title:"Final Draft", done:false}],
-          showSubGoals: false
+          showSubGoals: false,
+          color: "#def"
         },
         {
           id: 2,
           title: "React App",
           dueDate: "",
           tasks: [{id:1,title:"Design UI", done:true},{id:2,title:"Create Components", done:false},{id:3,title:"Finish front-end", done:false}],
-          showSubGoals: false
+          showSubGoals: false,
+          color: "#fab"
         }
       ]
 )
@@ -55,6 +58,13 @@ const toggleDone= (goalId,taskId) => {
   }))
   
 }
+
+var [goalColor,setGoalColor] = useState("white")
+const handleColorChange = () => {
+
+  setGoalColor(goalColor);
+  
+}
   
   return (
     <div className="App">
@@ -63,8 +73,9 @@ const toggleDone= (goalId,taskId) => {
         <TaskList goals={goals} onToggle={toggleDone} />
       </div>
       <div className = "container">
-        <Header title="Goals"/>
-        <GoalList goals={goals}  onToggle ={toggleSubGoals} toggleDone={toggleDone}/>
+        <Header  buttonColor="red" buttonText="❌ Never Mind"title="Goals" onAdd={() => setShowAddGoal(!showAddGoal)}/>
+        {showAddGoal ? <AddGoal onChange={handleColorChange} />:
+        <GoalList goals={goals}  onToggle ={toggleSubGoals} toggleDone={toggleDone}/>}
       </div>
     </div>
   );

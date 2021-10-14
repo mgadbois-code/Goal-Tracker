@@ -5,6 +5,9 @@ body {
   padding:2px;
 }
 
+.add-field {
+  padding-bottom: 10px;
+}
 
 .App {
   display: flex;
@@ -21,13 +24,6 @@ body {
   border-radius: 10px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  /* border: solid black 2px; */
-  align-items: center;
-
-}
 
 .btn {
   padding: 8px 20px;
@@ -86,4 +82,48 @@ body {
 
 .non-clickable {
   pointer-events: none;
+}
+
+.goal-form {
+  display: flex;
+  flex-direction: column;
+  align-items:stretch;
+  /* border: 4px solid black; */
+  min-width: 45%;
+
+}
+
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  /* border: solid black 2px; */
+  align-items: center;
+
+}
+
+.plus-btn {
+  padding: 4px 8px;
+  /* background: black; */
+  margin-left: 4px;
+  border: black solid 1px;
+  border-radius: 5px;
+  font-family: inherit;
+  /* font-weight: bold; */
+  color: white;
+  font-size: 8px;
+  cursor: pointer;
+}
+
+.goal-form-container {
+  display: flex;
+  justify-content:space-around;
+  align-items: flex-start;
+
+}
+
+.hue-picker {
+  cursor: pointer;
+  width:initial;
 }
