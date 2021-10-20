@@ -66,6 +66,11 @@ body {
   
 }
 
+#drop-down {
+  background-color: green;
+  color: white;
+}
+
 .flex {
   display: flex;
 }

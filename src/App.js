@@ -3,9 +3,14 @@ import Header from "./components/Header";
 import AddGoal from "./components/AddGoal";
 import { useState } from "react";
 import TaskList from "./components/TaskList";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AddTask from "./components/AddTask";
+
 
 function App() {
   const [showAddGoal, setShowAddGoal] = useState(false)
+  const [showAddTask, setShowAddTask] = useState(false)
+  const [addToGoal, setAddToGoal] = useState("")
   const [goals, setGoals] = useState(
     [
         {
@@ -65,16 +70,59 @@ const handleColorChange = () => {
   setGoalColor(goalColor);
   
 }
+
+const addGoal = (goal) => {
+  goal.id = goals.length+1;
+  console.log(goal)
+  setGoals([...goals,goal])
+
+}
+
+
+
+const handleDropDown = (eventKey,event) => {
+  setShowAddTask(!showAddTask)
+  setAddToGoal(eventKey)
+  console.log(eventKey);
+}
+
+const submitTasks = (taskArr) =>{
+  let taskObjArr = []
+  // console.log(taskArr)
+  let targetGoal = goals.filter((goal)=> {return goal.id==addToGoal})[0]
+  for(let i = 0; i < taskArr.length; i++){
+    taskObjArr.push({id:targetGoal.tasks.length+1+i, title:taskArr[i], done: false})
+  }
+  console.log(taskObjArr)
+
+  let newTasks = targetGoal.tasks.concat(taskObjArr);
+  targetGoal.tasks = newTasks
+  let newGoals = [...goals]
+  newGoals= newGoals.map((goal) => {
+    if(goal.id=== targetGoal.id){
+      return targetGoal
+    }
+    else{
+      return goal
+    }
+  })
+  setGoals(newGoals)
+
+}
+
+
   
   return (
     <div className="App">
       <div className="container">
-        <Header title="Tasks" onAdd={() => setShowAddGoal(!showAddGoal)} />
-        <TaskList goals={goals} onToggle={toggleDone} />
+        {/* Tasks components */}
+        <Header goals={goals} title="Tasks"  onAdd={handleDropDown} />
+        {showAddTask ? <AddTask addToGoal={addToGoal.id} onSubmit={submitTasks}/> : <TaskList goals={goals} onToggle={toggleDone} />}
       </div>
       <div className = "container">
-        <Header  buttonColor="red" buttonText="❌ Never Mind"title="Goals" onAdd={() => setShowAddGoal(!showAddGoal)}/>
-        {showAddGoal ? <AddGoal onChange={handleColorChange} />:
+        {/* Goals components */}
+       {showAddGoal ? <Header  buttonColor="red" buttonText="✖️ Never Mind" title="New Goal" onAdd={() => setShowAddGoal(!showAddGoal)}/> :  <Header  buttonColor="green" buttonText="Add"title="Goals" onAdd={() => setShowAddGoal(!showAddGoal)}/>}
+        {showAddGoal ? <AddGoal addGoal={addGoal} onChange={handleColorChange} />:
         <GoalList goals={goals}  onToggle ={toggleSubGoals} toggleDone={toggleDone}/>}
       </div>
     </div>

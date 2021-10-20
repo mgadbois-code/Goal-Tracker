@@ -1,7 +1,7 @@
 const Button = (props) => {
     return (
         <div>
-            <button className="btn" style={{backgroundColor: props.color}} onClick={props.onClick}>{props.text}</button>
+            <button className="btn" style={{backgroundColor: props.color, color: "white"}} onClick={props.onClick}>{props.text}</button>
         </div>
     )
 }

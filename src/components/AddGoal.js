@@ -12,9 +12,10 @@ const AddGoal = (props) => {
     var [taskName, setTaskName] = useState("")
     var [taskArr, setTaskArr] = useState([])
     var [color,setColor] = useState("green")
+
     const addTask = (event) => {
         event.preventDefault()
-        setTaskArr([...taskArr,{key:taskArr.length+1, title:taskName, done:false}])
+        setTaskArr([...taskArr,{id:taskArr.length+1, title:taskName, done:false}])
         console.log(taskArr)
         setTaskName("")
     }
@@ -26,16 +27,41 @@ const AddGoal = (props) => {
         console.log(color.hex)
 
     }
+
+    const handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+          event.preventDefault();
+          console.log("Enter Press")
+        }
+      }
+
+      const onSubmit = (event) => {
+          event.preventDefault();
+          if(!goalName){
+              alert("Enter a goal name");
+              return;
+          }
+          if(taskArr.length == 0){
+              alert("Add a task");
+              return;
+          }
+          
+          let goal = {title: goalName, dueDate: dueDate, tasks: taskArr, color: color};
+          props.addGoal(goal)
+         
+
+      }
+
     return (
-        <form className="goal-form-container">
+        <form  className="goal-form-container">
             <div className="goal-form">
                 <div className= "add-field">
                     <label>Goal Name: </label>
-                    <input type="text" value={goalName}  onChange={(event) => {setGoalName(event.target.value)}} placeholder="Goal Title" />
+                    <input onKeyPress={handleKeyPress} type="text" value={goalName}  onChange={(event) => {event.preventDefault(); setGoalName(event.target.value)}} placeholder="Goal Title" />
                 </div>
                 <div className= "add-field">
                     <label>Due Date (optional): </label>
-                    <input type="text" value={dueDate} onChange={(event) => setDueDate(event.target.value)} placeholder="Due Date"/>
+                    <input onKeyPress={handleKeyPress} type="text" value={dueDate} onChange={(event) => setDueDate(event.target.value)} placeholder="Due Date"/>
                 </div>
                 <div style={{display: "flex", alignItems:"center"}}>
                         <label style={{marginRight: 5}}>Tasks: </label>
@@ -53,7 +79,7 @@ const AddGoal = (props) => {
                     <HuePicker width="auto" color="ggg" onChange={(color,event) => changeColor(color,event)} />
                     </div>
                     <div style={{marginTop:"10px"}}>
-                        <Button  text="Submit Goal" color={color}/>
+                        <Button type="submit" text="Submit Goal" onClick = {onSubmit} color={color}/>
                     </div>
                 </div>
             </div>
