@@ -12,7 +12,8 @@ const AddTask = (props) => {
         setTaskName("")
     }
 
-    const submitTasks = (taskArr) =>{
+    const submitTasks = (event,taskArr) =>{
+        event.preventDefault();
         props.onSubmit(taskArr)
     }
 
@@ -23,7 +24,7 @@ const AddTask = (props) => {
                         <label style={{marginRight: 5}}>Tasks: </label>
                         <input type="text" value={taskName} onChange= {(event) => setTaskName(event.target.value)} placeholder="Add Task"/>
                         <button style = {{marginRight: "5%"}} onClick={(event) => addTask(event)} className="plus-btn"> ➕ </button>
-                        <Button  onClick={(event) =>submitTasks(taskArr)} type="submit" text="Add Tasks"  color="green"/>
+                        <Button  onClick={(event) => submitTasks(event,taskArr)} type="submit" text="Add Tasks"  color="green"/>
                 </div>
                 <ul>
                     {taskArr.map((task)=> <li>{task}</li>)}

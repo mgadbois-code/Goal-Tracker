@@ -37,6 +37,7 @@ const AddGoal = (props) => {
 
       const onSubmit = (event) => {
           event.preventDefault();
+          props.setShowGoals();
           if(!goalName){
               alert("Enter a goal name");
               return;
