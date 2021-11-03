@@ -1,10 +1,10 @@
-import GoalList from "./components/GoalList";
-import Header from "./components/Header";
-import AddGoal from "./components/AddGoal";
 import { useState } from "react";
-import TaskList from "./components/TaskList";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from "./components/Header";
 import AddTask from "./components/AddTask";
+import TaskList from "./components/TaskList";
+import AddGoal from "./components/AddGoal";
+import GoalList from "./components/GoalList";
 
 
 function App() {
@@ -14,12 +14,14 @@ function App() {
   const [minimizeTasks, setMinimizeTasks] = useState(false)
   const [minimizeGoals, setMinimizeGoals] = useState(false)
   const [goals, setGoals] = useState([ ])
+  const [goalColor,setGoalColor] = useState("white")
 
+// used in GoalList component to toggle view of tasks in a goal with checkmarks
 const toggleSubGoals = (id) => {
   setGoals(goals.map((goal) =>{
     if(goal.id === id){
       let newGoal = {...goal, showSubGoals: !goal.showSubGoals}
-      console.log(newGoal)
+      
       return newGoal
     }
     
@@ -28,6 +30,7 @@ const toggleSubGoals = (id) => {
   
 }
 
+//Toggles checkmark icon in the sugoals in the GoalList component from unchecked icon to checked icon
 const toggleDone= (goalId,taskId) => {
   setGoals(goals.map((goal) =>{
     if(goal.id === goalId){
@@ -40,7 +43,7 @@ const toggleDone= (goalId,taskId) => {
         return task
       })
       let newGoal = {...goal, tasks: newTasks}
-      console.log(newGoal)
+      
       return newGoal
     }
     return goal
@@ -48,37 +51,38 @@ const toggleDone= (goalId,taskId) => {
   
 }
 
-var [goalColor,setGoalColor] = useState("white")
+//Sets the goal color of a new goal. 
 const handleColorChange = () => {
-
   setGoalColor(goalColor);
   
 }
 
+//Creates goal object and adds it to the goals array
 const addGoal = (goal) => {
   goal.id = goals.length+1;
-  console.log(goal)
+  
   setGoals([...goals,goal])
 
 }
 
 
-
+//Toggle view of addTask component and TaskList component when dropdown is clicked and the goal to add to is chosen
 const handleDropDown = (eventKey,event) => {
   setShowAddTask(!showAddTask)
   setAddToGoal(eventKey)
-  console.log(showAddTask);
+  // 
 }
 
+//When submit button is clicked in addTask component it toggles view, adds the task to the target goal, uses setGoals
 const submitTasks = (taskArr) =>{
   setShowAddTask(!showAddTask)
   let taskObjArr = []
-  // console.log(taskArr)
+  // 
   let targetGoal = goals.filter((goal)=> {return goal.id==addToGoal})[0]
   for(let i = 0; i < taskArr.length; i++){
     taskObjArr.push({id:targetGoal.tasks.length+1+i, title:taskArr[i], done: false})
   }
-  console.log(taskObjArr)
+  
 
   let newTasks = targetGoal.tasks.concat(taskObjArr);
   targetGoal.tasks = newTasks
