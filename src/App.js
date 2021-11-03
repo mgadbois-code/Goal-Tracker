@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./components/Header";
 import AddTask from "./components/AddTask";
@@ -16,6 +16,32 @@ function App() {
   const [goals, setGoals] = useState([ ])
   const [goalColor,setGoalColor] = useState("white")
 
+  const fetchGoals = async() => {
+    const res = await fetch('http://localhost:5000/goals')
+    const data = await res.json();
+
+    return data;
+  }
+
+  const fetchGoal = async(id) => {
+    const res = await fetch(`http://localhost:5000/goals/${id}`)
+    const data = await res.json();
+
+    return data;
+  }
+
+  useEffect(() => {
+    const getGoals = async () => {
+      const goalsFromServer = await fetchGoals();
+      setGoals(goalsFromServer)
+    }
+    getGoals()
+  }, [])
+
+ //goals = [goal,goal,goal...]
+//  goal = {id: 1, title:"",dueDate:"",showSubGoals:bool, color:"", tasks:[task,task...]}  
+//task = {id:1, title:"", done:bool}
+
 // used in GoalList component to toggle view of tasks in a goal with checkmarks
 const toggleSubGoals = (id) => {
   setGoals(goals.map((goal) =>{
@@ -30,8 +56,39 @@ const toggleSubGoals = (id) => {
   
 }
 
-//Toggles checkmark icon in the sugoals in the GoalList component from unchecked icon to checked icon
-const toggleDone= (goalId,taskId) => {
+const removeGoal = async (goalId) => {
+  await fetch(`http://localhost:5000/goals/${goalId}`, {
+    method: 'DELETE',
+  })
+  setGoals(goals.filter(goal => goal.id != goalId))
+  console.log(goals)
+}
+
+//Toggles checkmark icon in the sugoals in the GoalList component from unchecked icon to checked icon by toggling done property in task object within goal object
+
+
+const toggleDone= async (goalId,taskId) => {
+  const goalToUpdate = await fetchGoal(goalId)
+  const tasks = goalToUpdate.tasks;
+  const updTasks = tasks.map((task) => {
+    if(task.id == taskId){
+      console.log(taskId)
+      task.done = !task.done
+    }
+    return task;
+  })
+  const updGoal = { ...goalToUpdate, tasks:updTasks}
+
+  const res = await fetch(`http://localhost:5000/goals/${goalId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(updGoal)
+  })
+
+  const data = await res.json();
+
   setGoals(goals.map((goal) =>{
     if(goal.id === goalId){
       let tasks= goal.tasks;
@@ -58,12 +115,21 @@ const handleColorChange = () => {
 }
 
 //Creates goal object and adds it to the goals array
-const addGoal = (goal) => {
-  goal.id = goals.length+1;
+const addGoal = async (goal) => {
+  const res = await fetch('http://localhost:5000/goals', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(goal)
+  })
+  const data = await res.json()
+  console.log(JSON.stringify(goal))
   
-  setGoals([...goals,goal])
+  setGoals([...goals,data])
 
 }
+
 
 
 //Toggle view of addTask component and TaskList component when dropdown is clicked and the goal to add to is chosen
@@ -113,7 +179,7 @@ const submitTasks = (taskArr) =>{
         {/* Goals components */}
        {showAddGoal ? <Header  buttonColor="red" buttonText="✖️ Never Mind" title="New Goal" onAdd={() => setShowAddGoal(!showAddGoal)}/> :  <Header  buttonColor="green" buttonText="Add"title="Goals" onAdd={() => setShowAddGoal(!showAddGoal)}/>}
         {showAddGoal ? <AddGoal setShowGoals={() => setShowAddGoal(!showAddGoal)} addGoal={addGoal} onChange={handleColorChange} />:
-        <GoalList goals={goals}  onToggle ={toggleSubGoals} toggleDone={toggleDone}/>}
+        <GoalList goals={goals}  removeGoal={removeGoal} onToggle ={toggleSubGoals} toggleDone={toggleDone}/>}
       </div>
 
     </div>

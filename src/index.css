@@ -36,19 +36,25 @@ body {
 
 .btn {
   padding: 8px 20px;
-  /* background: black; */
+  background-color: black;
   border: none;
   border-radius: 5px;
   font-family: inherit;
   font-weight: bold;
   color: white;
   cursor: pointer;
+  margin: 20px 0px 10px 20px;
   /* display: flex;
   justify-self: center; */
 }
 
 .btn:active {
   transform: scale(.95);
+}
+
+.task {
+  background: rgba(51, 170, 51, .1)
+
 }
 
 .item {

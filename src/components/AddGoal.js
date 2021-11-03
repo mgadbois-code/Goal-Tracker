@@ -11,27 +11,28 @@ const AddGoal = (props) => {
     var [dueDate,setDueDate] = useState("")
     var [taskName, setTaskName] = useState("")
     var [taskArr, setTaskArr] = useState([])
-    var [color,setColor] = useState("green")
+    var [color,setColor] = useState("#ff000080")
 
     const addTask = (event) => {
         event.preventDefault()
         setTaskArr([...taskArr,{id:taskArr.length+1, title:taskName, done:false}])
-        console.log(taskArr)
+        // console.log(taskArr)
         setTaskName("")
     }
 
     const changeColor = (color,event) =>{
-        setColor(color.hex)
+        let colorValue = color.hex + "80";
+        setColor(colorValue)
         props.onChange();
 
-        console.log(color.hex)
+        // console.log(color.hex)
 
     }
 
     const handleKeyPress = (event) => {
         if(event.key === 'Enter'){
           event.preventDefault();
-          console.log("Enter Press")
+        //   console.log("Enter Press")
         }
       }
 
@@ -80,7 +81,8 @@ const AddGoal = (props) => {
                     <HuePicker width="auto" color="ggg" onChange={(color,event) => changeColor(color,event)} />
                     </div>
                     <div style={{marginTop:"10px"}}>
-                        <Button type="submit" text="Submit Goal" onClick = {onSubmit} color={color}/>
+                    <button className="btn" type="submit" text="Submit Goal" onClick={onSubmit} style={{backgroundColor:color, color: "black", fontWeight:"bolder" }}>Submit Goal</button>
+                        {/* <Button type="submit" text="Submit Goal" onClick = {onSubmit} color={color}/> */}
                     </div>
                 </div>
             </div>

@@ -1,0 +1,50 @@
+{
+  "goals": [
+    {
+      "title": "New goal",
+      "dueDate": "",
+      "tasks": [
+        {
+          "id": 1,
+          "title": "one task",
+          "done": true
+        },
+        {
+          "id": 2,
+          "title": "two task",
+          "done": true
+        },
+        {
+          "id": 3,
+          "title": "three",
+          "done": true
+        }
+      ],
+      "color": "#ff000080",
+      "id": 1
+    },
+    {
+      "title": "test",
+      "dueDate": "",
+      "tasks": [
+        {
+          "id": 1,
+          "title": "1",
+          "done": false
+        },
+        {
+          "id": 2,
+          "title": "2",
+          "done": false
+        },
+        {
+          "id": 3,
+          "title": "3",
+          "done": false
+        }
+      ],
+      "color": "#ff8c0080",
+      "id": 2
+    }
+  ]
+}
