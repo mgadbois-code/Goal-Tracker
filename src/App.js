@@ -64,6 +64,46 @@ const removeGoal = async (goalId) => {
   console.log(goals)
 }
 
+const removeTask = async (goalId, taskId) => {
+  const goalToUpdate = await fetchGoal(goalId)
+  const tasks = goalToUpdate.tasks
+  const updTasks = tasks.filter(task => task.id != taskId).map((task,index) => {
+    task.id = index+1
+    return task
+  })
+  const updGoal = {...goalToUpdate, tasks:updTasks}
+  const res = await fetch(`http://localhost:5000/goals/${goalId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(updGoal)
+  })
+
+  let data = await res.json()
+  console.log(data)
+
+    setGoals(goals.map((goal) =>{
+    if(goal.id === goalId){
+      let tasks= goal.tasks;
+      let newTasks = tasks.filter((task) => {
+        return task.id != taskId
+      }).map((task,index) => {
+        task.id = index + 1
+        return task
+      })
+      let newGoal = {...goal, tasks: newTasks}
+      
+      return newGoal
+    }
+    return goal
+  }))
+  
+
+}
+
+
+
 //Toggles checkmark icon in the sugoals in the GoalList component from unchecked icon to checked icon by toggling done property in task object within goal object
 
 
@@ -108,6 +148,48 @@ const toggleDone= async (goalId,taskId) => {
   
 }
 
+//When submit button is clicked in addTask component it toggles view, adds the task to the target goal, uses setGoals
+const submitTasks = async (taskArr) =>{
+ 
+  setShowAddTask(!showAddTask)
+  let taskObjArr = []
+  // 
+  let targetGoal = goals.filter((goal)=> {return goal.id==addToGoal})[0]
+  for(let i = 0; i < taskArr.length; i++){
+    taskObjArr.push({id:targetGoal.tasks.length+1+i, title:taskArr[i], done: false})
+  }
+  
+
+  let newTasks = targetGoal.tasks.concat(taskObjArr);
+  targetGoal.tasks = newTasks
+
+  const goalToUpdate = await fetchGoal(addToGoal)
+  goalToUpdate.tasks = newTasks;
+
+  const res = await fetch(`http://localhost:5000/goals/${addToGoal}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(goalToUpdate)
+  })
+
+  const data = await res.json();
+
+
+  let newGoals = [...goals]
+  newGoals= newGoals.map((goal) => {
+    if(goal.id=== targetGoal.id){
+      return targetGoal
+    }
+    else{
+      return goal
+    }
+  })
+  setGoals(newGoals)
+
+}
+
 //Sets the goal color of a new goal. 
 const handleColorChange = () => {
   setGoalColor(goalColor);
@@ -139,31 +221,6 @@ const handleDropDown = (eventKey,event) => {
   // 
 }
 
-//When submit button is clicked in addTask component it toggles view, adds the task to the target goal, uses setGoals
-const submitTasks = (taskArr) =>{
-  setShowAddTask(!showAddTask)
-  let taskObjArr = []
-  // 
-  let targetGoal = goals.filter((goal)=> {return goal.id==addToGoal})[0]
-  for(let i = 0; i < taskArr.length; i++){
-    taskObjArr.push({id:targetGoal.tasks.length+1+i, title:taskArr[i], done: false})
-  }
-  
-
-  let newTasks = targetGoal.tasks.concat(taskObjArr);
-  targetGoal.tasks = newTasks
-  let newGoals = [...goals]
-  newGoals= newGoals.map((goal) => {
-    if(goal.id=== targetGoal.id){
-      return targetGoal
-    }
-    else{
-      return goal
-    }
-  })
-  setGoals(newGoals)
-
-}
 
 
   
@@ -173,7 +230,7 @@ const submitTasks = (taskArr) =>{
       <div className="container">
         {/* Tasks components */}
         {showAddTask ? <Header buttonColor="red" buttonText="✖️ Never Mind" title="New Task" onAdd={() => (setShowAddTask(!showAddTask))}/> : <Header goals={goals} title="Tasks"  onAdd={handleDropDown} />}
-        {showAddTask ? <AddTask addToGoal={addToGoal.id} onSubmit={submitTasks}/> : <TaskList goals={goals} onToggle={toggleDone} />}
+        {showAddTask ? <AddTask addToGoal={addToGoal.id} onSubmit={submitTasks}/> : <TaskList goals={goals} removeTask={removeTask}  onToggle={toggleDone} />}
       </div>
       <div className = "container">
         {/* Goals components */}

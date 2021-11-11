@@ -1,50 +1,27 @@
 {
   "goals": [
     {
-      "title": "New goal",
+      "title": "Goal Tracker 1.0",
       "dueDate": "",
       "tasks": [
         {
           "id": 1,
-          "title": "one task",
-          "done": true
+          "title": "Minimize Windows functionality",
+          "done": false
         },
         {
           "id": 2,
-          "title": "two task",
-          "done": true
+          "title": "Port to Electron",
+          "done": false
         },
         {
           "id": 3,
-          "title": "three",
-          "done": true
+          "title": "Focus goals",
+          "done": false
         }
       ],
       "color": "#ff000080",
       "id": 1
-    },
-    {
-      "title": "test",
-      "dueDate": "",
-      "tasks": [
-        {
-          "id": 1,
-          "title": "1",
-          "done": false
-        },
-        {
-          "id": 2,
-          "title": "2",
-          "done": false
-        },
-        {
-          "id": 3,
-          "title": "3",
-          "done": false
-        }
-      ],
-      "color": "#ff8c0080",
-      "id": 2
     }
   ]
 }
