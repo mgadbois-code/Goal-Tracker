@@ -119,7 +119,7 @@ body {
   display: flex;
   justify-content: space-between;
   /* border: solid black 2px; */
-  align-items: center;
+  align-items:center;
 
 }
 

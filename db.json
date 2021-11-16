@@ -1,27 +1,116 @@
 {
   "goals": [
     {
-      "title": "Goal Tracker 1.0",
+      "title": "Goal Tracker 2.0",
       "dueDate": "",
       "tasks": [
         {
           "id": 1,
-          "title": "Minimize Windows functionality",
+          "title": "Day planner",
           "done": false
         },
         {
           "id": 2,
-          "title": "Port to Electron",
+          "title": "Project Category",
           "done": false
         },
         {
           "id": 3,
-          "title": "Focus goals",
+          "title": "Completed Goals",
+          "done": false
+        },
+        {
+          "id": 4,
+          "title": "React Native",
+          "done": false
+        },
+        {
+          "id": 5,
+          "title": "Reorgainzing functionality",
+          "done": false
+        },
+        {
+          "id": 6,
+          "title": "Change Icon",
+          "done": false
+        },
+        {
+          "id": 7,
+          "title": "Acknowledge Empty goal/TaskList",
+          "done": false
+        },
+        {
+          "id": 8,
+          "title": "Edit Goal Functionality",
+          "done": false
+        },
+        {
+          "id": 9,
+          "title": "Implent Calendar",
+          "done": false
+        },
+        {
+          "id": 10,
+          "title": "Integrate Journal App",
+          "done": false
+        }
+      ],
+      "color": "#ffb50080",
+      "id": 2,
+      "visible": false
+    },
+    {
+      "title": "Sunday",
+      "dueDate": "11/14/21",
+      "tasks": [
+        {
+          "id": 1,
+          "title": "Port Goal Tracker To Electron",
+          "done": false
+        },
+        {
+          "id": 2,
+          "title": "Spend sometime researching companies",
+          "done": false
+        },
+        {
+          "id": 3,
+          "title": "Apply to job",
+          "done": false
+        },
+        {
+          "id": 4,
+          "title": "Start building my website",
+          "done": false
+        },
+        {
+          "id": 5,
+          "title": "Leet Code",
+          "done": false
+        },
+        {
+          "id": 6,
+          "title": "Commit goal tracker changes to GitHub",
+          "done": false
+        }
+      ],
+      "color": "#00a3ff80",
+      "visible": true,
+      "id": 3
+    },
+    {
+      "title": "Journal Electron app",
+      "dueDate": "",
+      "tasks": [
+        {
+          "id": 1,
+          "title": "Make This",
           "done": false
         }
       ],
       "color": "#ff000080",
-      "id": 1
+      "visible": false,
+      "id": 5
     }
   ]
 }

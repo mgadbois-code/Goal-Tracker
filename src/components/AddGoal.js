@@ -12,6 +12,7 @@ const AddGoal = (props) => {
     var [taskName, setTaskName] = useState("")
     var [taskArr, setTaskArr] = useState([])
     var [color,setColor] = useState("#ff000080")
+    var [visible, setVisible] = useState(true)
 
     const addTask = (event) => {
         event.preventDefault()
@@ -48,7 +49,7 @@ const AddGoal = (props) => {
               return;
           }
           
-          let goal = {title: goalName, dueDate: dueDate, tasks: taskArr, color: color};
+          let goal = {title: goalName, dueDate: dueDate, tasks: taskArr, color: color, visible:true};
           props.addGoal(goal)
          
 

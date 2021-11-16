@@ -6,7 +6,7 @@ const GoalList = (props) => {
     return (
         <div>
            { props.goals.map((goal,index) => 
-           <Goal key = {index} removeGoal={props.removeGoal} toggleDone = {props.toggleDone} goal= {goal} onToggle={props.onToggle}/>
+           <Goal key = {index} removeGoal={props.removeGoal} toggleDone = {props.toggleDone} goal= {goal} onToggle={props.onToggle} toggleVisible={props.toggleVisible}/>
            )}
         </div>
     )
